@@ -68,14 +68,23 @@ module.exports = {
             return arr;
         },
         config: function () {
-            return Object.assign({
+            config={
                 offset: 3,
                 ariaPrevious: 'Previous',
                 ariaNext: 'Next',
                 previousText: '«',
                 nextText: '»',
                 alwaysShowPrevNext: false
-            }, this.options);
+            };
+
+            //Merge config
+            for (var k in this.options) {
+                if(this.options.hasOwnProperty(k)) {
+                    config[k]=this.options[k];
+                }
+            }
+
+            return config;
         },
         sizeClass: function () {
             if (this.size === 'large') {
