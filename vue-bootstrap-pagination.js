@@ -1,31 +1,32 @@
 module.exports = {
-    template: `<nav>
-        <ul class="pagination" v-if="pagination.last_page > 0" :class="sizeClass">
-            <li v-if="showPrevious()" :class="{ 'disabled' : pagination.current_page <= 1 }">
-                <span v-if="pagination.current_page <= 1">
-                    <span aria-hidden="true">{{ config.previousText }}</span>
-                </span>
-                
-                <a href="#" v-if="pagination.current_page > 1 " :aria-label="config.ariaPrevioius" @click.prevent="changePage(pagination.current_page - 1)">
-                    <span aria-hidden="true">{{ config.previousText }}</span>
-                </a>
-            </li>
+    template: '<nav>'+"\n"+
+'        <ul class="pagination" v-if="pagination.last_page > 0" :class="sizeClass">'+"\n"+
+'            <li v-if="showPrevious()" :class="{ \'disabled\' : pagination.current_page <= 1 }">'+"\n"+
+'                <span v-if="pagination.current_page <= 1">'+"\n"+
+'                    <span aria-hidden="true">{{ config.previousText }}</span>'+"\n"+
+'                </span>'+"\n"+
+"\n"+
+'                <a href="#" v-if="pagination.current_page > 1 " :aria-label="config.ariaPrevioius" @click.prevent="changePage(pagination.current_page - 1)">'+"\n"+
+'                    <span aria-hidden="true">{{ config.previousText }}</span>'+"\n"+
+'                </a>'+"\n"+
+'            </li>'+"\n"+
+"\n"+
+'            <li v-for="num in array" :class="{ \'active\': num === pagination.current_page }">'+"\n"+
+'                <a href="#" @click.prevent="changePage(num)">{{ num }}</a>'+"\n"+
+'            </li>'+"\n"+
+"\n"+
+'            <li v-if="showNext()" :class="{ \'disabled\' : pagination.current_page === pagination.last_page || pagination.last_page === 0 }">'+"\n"+
+'                <span v-if="pagination.current_page === pagination.last_page || pagination.last_page === 0">'+"\n"+
+'                    <span aria-hidden="true">{{ config.nextText }}</span>'+"\n"+
+'                </span>'+"\n"+
+"\n"+
+'                <a href="#" v-if="pagination.current_page < pagination.last_page" :aria-label="config.ariaNext" @click.prevent="changePage(pagination.current_page + 1)">'+"\n"+
+'                    <span aria-hidden="true">{{ config.nextText }}</span>'+"\n"+
+'                </a>'+"\n"+
+'            </li>'+"\n"+
+'        </ul>'+"\n"+
+'    </nav>',
 
-            <li v-for="num in array" :class="{ 'active': num === pagination.current_page }">
-                <a href="#" @click.prevent="changePage(num)">{{ num }}</a>
-            </li>
-
-            <li v-if="showNext()" :class="{ 'disabled' : pagination.current_page === pagination.last_page || pagination.last_page === 0 }">
-                <span v-if="pagination.current_page === pagination.last_page || pagination.last_page === 0">
-                    <span aria-hidden="true">{{ config.nextText }}</span>
-                </span>
-                
-                <a href="#" v-if="pagination.current_page < pagination.last_page" :aria-label="config.ariaNext" @click.prevent="changePage(pagination.current_page + 1)">
-                    <span aria-hidden="true">{{ config.nextText }}</span>
-                </a>
-            </li>
-        </ul>
-    </nav>`,
     props: {
         pagination: {
             type: Object,
@@ -43,7 +44,7 @@ module.exports = {
         }
     },
     computed: {
-        array () {
+        array: function () {
             if (this.pagination.last_page <= 0) {
                 return [];
             }
@@ -66,7 +67,7 @@ module.exports = {
 
             return arr;
         },
-        config () {
+        config: function () {
             return Object.assign({
                 offset: 3,
                 ariaPrevious: 'Previous',
@@ -76,7 +77,7 @@ module.exports = {
                 alwaysShowPrevNext: false
             }, this.options);
         },
-        sizeClass () {
+        sizeClass: function () {
             if (this.size === 'large') {
                 return 'pagination-lg';
             } else if(this.size === 'small') {
@@ -87,20 +88,20 @@ module.exports = {
         }
     },
     watch: {
-        'pagination.per_page' (newVal, oldVal) {
+        'pagination.per_page': function (newVal, oldVal) {
             if (+newVal !== +oldVal) {
                 this.callback();
             }
         }
     },
     methods: {
-        showPrevious () {
+        showPrevious: function () {
             return this.config.alwaysShowPrevNext || this.pagination.current_page > 1;
         },
-        showNext () {
+        showNext: function () {
             return this.config.alwaysShowPrevNext || this.pagination.current_page < this.pagination.last_page;
         },
-        changePage (page) {
+        changePage: function (page) {
             if (this.pagination.current_page === page) {
                 return;
             }
