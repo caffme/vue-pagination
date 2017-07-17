@@ -49,17 +49,17 @@ module.exports = {
                 return [];
             }
 
-            let from = this.pagination.current_page - this.config.offset;
+            from = this.pagination.current_page - this.config.offset;
             if (from < 1) {
                 from = 1;
             }
 
-            let to = from + (this.config.offset * 2);
+            to = from + (this.config.offset * 2);
             if (to >= this.pagination.last_page) {
                 to = this.pagination.last_page;
             }
 
-            let arr = [];
+            arr = [];
             while (from <=to) {
                 arr.push(from);
                 from++;
